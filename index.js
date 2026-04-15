@@ -212,27 +212,14 @@ async function startBot() {
     if (isConnecting) return
     isConnecting = true
 
-    // 🔥 FITUR NUCLEAR RESET (Hapus Sesi jika RESET_SESSION=true di Railway)
-    const SESSION_PATH = "./data/session"
-    if (process.env.RESET_SESSION === "true") {
-        console.log("⚠️ RESET_SESSION terdeteksi. Menghapus folder sesi lama...")
-        try {
-            fs.removeSync(SESSION_PATH)
-            console.log("✅ Folder sesi berhasil dihapus.")
-        } catch (err) {
-            console.error("❌ Gagal menghapus folder sesi:", err.message)
-        }
-    }
-
-    const { state, saveCreds } = await useMultiFileAuthState(SESSION_PATH)
+    const { state, saveCreds } = await useMultiFileAuthState("./data/session")
     const { version } = await fetchLatestBaileysVersion()
 
     const sock = makeWASocket({
         version,
         auth: state,
         logger: P({ level: "silent" }),
-        printQRInTerminal: false,
-        browser: ["Ubuntu", "Chrome", "20.0.0"]
+        printQRInTerminal: false
     })
 
     sock.ev.on("creds.update", saveCreds)
