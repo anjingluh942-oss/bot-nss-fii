@@ -1,7 +1,9 @@
 [phases.setup]
 nixPkgs = ["fontconfig", "dejavu_fonts", "cairo", "pango", "libjpeg", "giflib", "librsvg"]
+cmds = ["fc-cache -f -v"]
 
 [variables]
-FONTCONFIG_PATH = "/etc/fonts"
-FONTCONFIG_FILE = "/etc/fonts/fonts.conf"
+FONTCONFIG_PATH = "/app"
+FONTCONFIG_FILE = "/app/fonts.conf"
+XDG_DATA_HOME = "/tmp"
 LD_LIBRARY_PATH = "$LD_LIBRARY_PATH:/usr/lib/x86_64-linux-gnu"
